@@ -6,12 +6,39 @@
  */
 
 (function (global) {
+	var rnd_id = global["_tb_beacon_id"] || 1;
+	global["_tb_beacon_id"] = rnd_id + 1;
+	function log(msg) {
+		var el = document.getElementById("inform-ul"),
+			dt = new Date(),
+			s, li,
+			el0;
 
-	// http://www.atpanel.com/1.gif?
-	// cache=593580&pre=&scr=1680x1050&category=&userid=&tid=04af1429123307f430c02f184c67f005&channel=109&ad_id=
+		s = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds() + " "
+			+ "beacon.js#" + rnd_id + " "
+			+ msg;
+		li = document.createElement("li");
+		li.appendChild(document.createTextNode(s));
+
+		if (!el) {
+			el0 = document.createElement("div");
+			el0.id = "inform";
+			el = document.createElement("ul");
+			el.id = "inform-ul";
+			el0.appendChild(el);
+			document.getElementsByTagName("body")[0].appendChild(el0);
+		}
+
+		el.appendChild(li);
+	}
+	log("开始加载！")
+
 
 	var _k = "_tb_beacon_loaded";
-	if (global[_k]) return; // 防止本段脚本重复执行
+	if (global[_k]) {
+		log("beacon.js 已经加载，本脚本停止执行！")
+		return;
+	} // 防止本段脚本重复执行
 	global[_k] = 1;
 
 	var doc = document,
@@ -63,6 +90,7 @@
 		},
 
 		send: function () {
+			log("准备发送打点信息...");
 			var img = new Image(),
 				rnd_id = "_ta_rndid_" + Math.random();
 
@@ -70,6 +98,7 @@
 
 			img.onload = img.onerror = function () {
 				global[rnd_id] = null;
+				log("打点信息发送完成。");
 			};
 
 			img.src = beacon_url + "?cache="
@@ -78,31 +107,13 @@
 				+ "&" + ex_params;
 
 			img = null;
+			log("打点信息已发送。");
 		}
 	}
 
+	log("加载完成，即将初始化...")
 	engine.init();
+	log("初始化完成。")
 
 })(window);
 
-//(function() {
-//	function atrand(num) {
-//		return Math.floor(Math.random() * num) + 1
-//	}
-//
-//	var P = location.pathname;
-//	if ((parent === self)
-//		|| P.indexOf('/list_forum') != -1
-//		|| P.indexOf('/theme/info/info') != -1
-//		|| P.indexOf('/promo/co_header.php') != -1
-//		|| P.indexOf('fast_buy.htm') != -1
-//		|| P.indexOf('/add_collection.htm') != -1
-//		|| P.indexOf('/taobao_digital_iframe') != -1
-//		|| window.tbdw_frame_count == true) {
-//
-//		var R = escape(document.referrer);
-//		document.write('<img src="http://www.atpanel.com/1.gif?cache='
-//			+ atrand(9999999) + '&pre=' + R + '&scr=' + screen.width + 'x' + screen.height
-//			+ '&category=&userid=&tid=04af1429123307f430c02f184c67f005&channel=109&ad_id=" width="0" height="0" style="display:none;" />')
-//	}
-//})();

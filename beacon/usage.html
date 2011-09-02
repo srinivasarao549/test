@@ -1,7 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 <head>
-	<title></title>
+	<title>beacon test</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css">
+		#inform {
+			width: 480px;
+			height: 360px;
+			border: solid 1px #999;
+			padding: 4px;
+			overflow: auto;
+			background: #f5f5f5;
+			font-size: 12px;
+			line-height: 20px;
+		}
+		#inform-ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		#inform-ul li {
+			padding: 0;
+			margin: 0;
+		}
+	</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -13,7 +35,6 @@ ta.src="beacon.js";
 document.getElementsByTagName("head")[0].appendChild(ta);
 })();
 </script>
-
 <script type="text/javascript">
 	(function () {
 		var ta=document.createElement("script");ta.type="text/javascript";ta.async=true;ta.id="tb-beacon";
@@ -23,7 +44,18 @@ document.getElementsByTagName("head")[0].appendChild(ta);
 		document.getElementsByTagName("head")[0].appendChild(ta);
 	})();
 </script>
+<script type="text/javascript">
+	(function () {
+		var ta=document.createElement("script");ta.type="text/javascript";ta.async=true;ta.id="tb-beacon";
+		ta.setAttribute("exparams","k=789");
+		ta.src="beacon.js";
+//ta.src=("https:"==document.location.protocol?"https://s":"http://a")+".tbcdn.cn/s/beacon.js";
+		document.getElementsByTagName("head")[0].appendChild(ta);
+	})();
+</script>
 
 test
+
+<!--<div id="inform"><ul id="inform-ul"></ul></div>-->
 </body>
 </html>
